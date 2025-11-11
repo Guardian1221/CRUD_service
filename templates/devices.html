@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>{% block title %} Компьютеры Colizeum {% endblock %}</h1>
+
+<div class="container mt-3">
+    <div class="row">
+        {% for device in devices %}
+        <div class="col-md-6 col-lg-4 mb-3">
+            <div class="card p-3 mb-2 border-primary">
+                <div class="card-header">
+                    <a href="{{ url_for('device', device_id=device['id']) }}">
+                        <b>{{ device['address'] }}</b>
+                    </a>
+                </div>
+                <div class="card-body">
+                    <p class="card-text">
+                        <i class="bi-building"></i> {{ device['branch_name'] or 'Филиал не указан' }}<br>
+                        <i class="bi-person"></i> {{ device['current_client_name'] or 'Свободен' }}
+                    </p>
+                </div>
+                <div class="card-footer bg-transparent">
+                    <div class="btn-group w-100" role="group">
+                        <a href="{{ url_for('device', device_id=device['id']) }}" class="btn btn-outline-primary btn-sm">
+                            <i class="bi-eye"></i> Просмотр
+                        </a>
+                        {% if not device['current_client_name'] %}
+                        <a href="{{ url_for('new_contract') }}?device_id={{ device['id'] }}" class="btn btn-outline-success btn-sm">
+                            <i class="bi-play-circle"></i> Сеанс
+                        </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <div class="col-12">
+            <div class="text-center py-5">
+                <i class="bi-pc-display display-1 text-muted"></i>
+                <h3 class="text-muted mt-3">Компьютеры не найдены</h3>
+                <p class="text-muted">Добавьте первый компьютер</p>
+                <a href="{{ url_for('new_device') }}" class="btn btn-primary">
+                    <i class="bi-pc"></i> Добавить компьютер
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}

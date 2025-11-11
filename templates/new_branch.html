@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>{% block title %} Добавление нового филиала {% endblock %}</h1>
+<br>
+<form method="post" class="px-4">
+    <div class="row mb-4">
+        <label for="branch_name" class="col-sm-3 col-form-label">Название филиала</label>
+        <div class="col-sm-8">
+            <input type="text" class="form-control" name="branch_name" value="{{ request.form['branch_name'] }}" placeholder="Введите название филиала..." required>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label for="address" class="col-sm-3 col-form-label">Адрес</label>
+        <div class="col-sm-8">
+            <input type="text" class="form-control" name="address" value="{{ request.form['address'] }}" placeholder="Введите адрес филиала..." required>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary"><i class="bi-building-add"></i> Добавить филиал</button>
+    <a href="/branches" class="btn btn-secondary">Отмена</a>
+</form>
+{% endblock %}

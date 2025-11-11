@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>{% block title %} Сотрудник: {{ employee['name'] }} {% endblock %}</h2>
+<hr>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Параметр</th>
+            <th scope="col">Значение</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>ФИО сотрудника</td>
+            <td>{{ employee['name'] }}</td>
+        </tr>
+        <tr>
+            <td>Электронная почта</td>
+            <td>{{ employee['email'] }}</td>
+        </tr>
+        <tr>
+            <td>Номер телефона</td>
+            <td>{{ employee['phone_number'] }}</td>
+        </tr>
+        <tr>
+            <td>Должность</td>
+            <td>{{ employee['position'] }}</td>
+        </tr>
+        <tr>
+            <td>Филиал</td>
+            <td>{{ employee['branch_name'] }}</td>
+        </tr>
+        <tr>
+            <td>Начальник</td>
+            <td>{{ employee['chief_name'] or 'Не указан' }}</td>
+        </tr>
+    </tbody>
+</table>
+
+<div class="row">
+    <div class="col-auto">
+        <a href="/employees">
+            <button type="button" class="btn btn-secondary"><i class="bi-people"></i> Все сотрудники</button>
+        </a>
+    </div>
+    <div class="col-auto">
+        <a href="/contracts">
+            <button type="button" class="btn btn-secondary"><i class="bi-clock-history"></i> Сеансы аренды</button>
+        </a>
+    </div>
+</div>
+{% endblock %}

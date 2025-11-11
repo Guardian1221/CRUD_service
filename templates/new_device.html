@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>{% block title %} Добавление нового компьютера {% endblock %}</h1>
+<br>
+<form method="post" class="px-4">
+    <div class="row mb-4">
+        <label for="address" class="col-sm-3 col-form-label">Местоположение</label>
+        <div class="col-sm-8">
+            <input type="text" class="form-control" name="address" value="{{ request.form['address'] }}" placeholder="Например: Зал A, место 1" required>
+        </div>
+    </div>
+    
+    <div class="row mb-3">
+        <label for="branch_id" class="col-sm-3 col-form-label">Филиал</label>
+        <div class="col-sm-8">
+            <select class="form-select" name="branch_id" required>
+                <option value="">Выберите филиал...</option>
+                {% for branch in branches %}
+                    <option value="{{ branch.id }}">{{ branch.branch_name }} ({{ branch.address }})</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary"><i class="bi-pc"></i> Добавить компьютер</button>
+    <a href="/devices" class="btn btn-secondary">Отмена</a>
+</form>
+
+{% endblock %}

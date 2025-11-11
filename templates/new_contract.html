@@ -1,0 +1,127 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>{% block title %} Новый сеанс аренды {% endblock %}</h1>
+<br>
+<form method="post" class="px-4">
+    <div class="row mb-3">
+        <label for="number" class="col-sm-3 col-form-label">Номер сеанса</label>
+        <div class="col-sm-4">
+            <input type="text" class="form-control" name="number" value="{{ request.form['number'] }}" placeholder="COL-001" required>
+        </div>
+    </div>
+    
+    <div class="row mb-3">
+        <label for="date" class="col-sm-3 col-form-label">Дата и время</label>
+        <div class="col-sm-4">
+            <input type="datetime-local" class="form-control" name="date" value="{{ request.form['date'] }}" required>
+        </div>
+    </div>
+    
+    <div class="row mb-3">
+        <label for="client_id" class="col-sm-3 col-form-label">Клиент</label>
+        <div class="col-sm-8">
+            <select class="form-select" name="client_id" required>
+                <option value="">Выберите клиента...</option>
+                {% for client in clients %}
+                    <option value="{{ client.id }}" {% if request.args.get('client_id')|int == client.id %}selected{% endif %}>
+                        {{ client.name }} ({{ client.phone_number }})
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+    
+    <div class="row mb-3">
+        <label for="device_id" class="col-sm-3 col-form-label">Компьютер</label>
+        <div class="col-sm-8">
+            <select class="form-select" name="device_id" required>
+                <option value="">Выберите компьютер...</option>
+                {% for device in devices %}
+                    <option value="{{ device.id }}" {% if request.args.get('device_id')|int == device.id %}selected{% endif %}>
+                        {{ device.address }} ({{ device.branch_name }})
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+    
+    <div class="row mb-3">
+        <label for="price" class="col-sm-3 col-form-label">Тариф и скидка</label>
+        <div class="col-sm-3">
+            <div class="input-group">
+                <input type="number" class="form-control" name="price" value="{{ request.form['price'] or '100' }}" placeholder="100" min="1" required>
+                <span class="input-group-text">₽/час</span>
+            </div>
+        </div>
+        <div class="col-sm-2">
+            <div class="input-group">
+                <input type="number" class="form-control" name="discount" value="{{ request.form['discount'] or '0' }}" placeholder="0" min="0" max="100">
+                <span class="input-group-text">%</span>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row mb-3">
+        <label for="device_status" class="col-sm-3 col-form-label">Статус устройства</label>
+        <div class="col-sm-8">
+            <select class="form-select" name="device_status">
+                <option value="Норма" selected>Норма</option>
+                <option value="Требует обслуживания">Требует обслуживания</option>
+                <option value="Неисправно">Неисправно</option>
+            </select>
+        </div>
+    </div>
+    
+    <div class="row mb-3">
+        <label for="employee_id" class="col-sm-3 col-form-label">Сотрудник</label>
+        <div class="col-sm-8">
+            <select class="form-select" name="employee_id" required>
+                <option value="">Выберите сотрудника...</option>
+                {% for employee in employees %}
+                    <option value="{{ employee.id }}">
+                        {{ employee.name }} ({{ employee.position }})
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+    
+    <div class="row mb-4">
+        <div class="col-sm-8 offset-sm-3">
+            <div class="card bg-light">
+                <div class="card-body">
+                    <h6 class="card-title">Расчет стоимости</h6>
+                    <p class="card-text mb-1">Тариф: <span id="tariff-display">100</span> ₽/час</p>
+                    <p class="card-text mb-1">Скидка: <span id="discount-display">0</span>%</p>
+                    <p class="card-text mb-0"><strong>Итоговая стоимость: <span id="final-price">100</span> ₽/час</strong></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary"><i class="bi-play-circle"></i> Начать сеанс</button>
+    <a href="/contracts" class="btn btn-secondary">Отмена</a>
+</form>
+
+<script>
+// Расчет стоимости в реальном времени
+function calculatePrice() {
+    const price = parseFloat(document.querySelector('input[name="price"]').value) || 0;
+    const discount = parseFloat(document.querySelector('input[name="discount"]').value) || 0;
+    
+    const finalPrice = price * (100 - discount) / 100;
+    
+    document.getElementById('tariff-display').textContent = price;
+    document.getElementById('discount-display').textContent = discount;
+    document.getElementById('final-price').textContent = finalPrice.toFixed(0);
+}
+
+
+document.querySelector('input[name="price"]').addEventListener('input', calculatePrice);
+document.querySelector('input[name="discount"]').addEventListener('input', calculatePrice);
+
+
+calculatePrice();
+</script>
+
+{% endblock %}

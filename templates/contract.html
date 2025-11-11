@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>{% block title %} Сеанс #{{ contract['numbers'] }} от {{ contract['dates'] }} {% endblock %}</h2>
+<hr>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col">Параметр</th>
+            <th scope="col">Значение</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Тариф в час</td>
+            <td>{{ contract['price'] }} ₽</td>
+        </tr>
+        <tr>
+            <td>Скидка</td>
+            <td>{{ contract['discount'] or '0' }} %</td>
+        </tr>
+        <tr>
+            <td>Итоговая стоимость</td>
+            <td><strong>{{ contract['finish_price'] }} ₽</strong></td>
+        </tr>
+        <tr>
+            <td>Дата сеанса</td>
+            <td>{{ contract['dates'] }}</td>
+        </tr>
+        <tr>
+            <td>Клиент</td>
+            <td>
+                {{ contract['client_name'] }}<br>
+                <small>тел: {{ contract['client_phone'] }}{% if contract['client_email'] %}, email: {{ contract['client_email'] }}{% endif %}</small>
+            </td>
+        </tr>
+        <tr>
+            <td>Компьютер</td>
+            <td>
+                {{ contract['device_address'] }}<br>
+                <small>Филиал: {{ contract['branch_name'] or 'Не указан' }}</small>
+            </td>
+        </tr>
+        <tr>
+            <td>Сотрудник</td>
+            <td>{{ contract['employee_name'] or 'Не назначен' }}</td>
+        </tr>
+        <tr>
+            <td>Статус устройства</td>
+            <td>{{ contract['device_status'] or 'Норма' }}</td>
+        </tr>
+    </tbody>
+</table>
+
+<div class="row mt-4">
+    <div class="col-auto">
+        <a href="{{ url_for('client', client_id=contract['client_id']) }}">
+            <button type="button" class="btn btn-secondary"><i class="bi-people"></i> Перейти к клиенту</button>
+        </a>
+    </div>
+    <div class="col-auto">
+        <a href="{{ url_for('device', device_id=contract['device_id']) }}">
+            <button type="button" class="btn btn-secondary"><i class="bi-pc-display"></i> Перейти к компьютеру</button>
+        </a>
+    </div>
+    <div class="col-auto">
+        <a href="{{ url_for('generate_contract', contract_id=contract['id']) }}" class="btn btn-info">
+            <i class="bi-file-earmark-pdf"></i> Скачать PDF
+        </a>
+    </div>
+</div>
+
+{% endblock %}

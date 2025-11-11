@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>{% block title %} Компьютер: {{ device['address'] }} {% endblock %}</h2>
+<hr>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col">Параметр</th>
+            <th scope="col">Значение</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Местоположение</td>
+            <td>{{ device['address'] }}</td>
+        </tr>
+        <tr>
+            <td>Филиал</td>
+            <td>{{ device['branch_name'] or 'Не указан' }}</td>
+        </tr>
+        <tr>
+            <td>Текущий клиент</td>
+            <td>{{ device['current_client_name'] or 'Свободен' }}</td>
+        </tr>
+    </tbody>
+</table>
+
+<div class="row mt-4">
+    <div class="col-auto">
+        <a href="/devices">
+            <button type="button" class="btn btn-secondary"><i class="bi-arrow-left"></i> Все компьютеры</button>
+        </a>
+    </div>
+    <div class="col-auto">
+        <a href="/contracts">
+            <button type="button" class="btn btn-secondary"><i class="bi-clock-history"></i> Все сеансы</button>
+        </a>
+    </div>
+    {% if not device['current_client_name'] %}
+    <div class="col-auto">
+        <a href="{{ url_for('new_contract') }}?device_id={{ device['id'] }}">
+            <button type="button" class="btn btn-success"><i class="bi-play-circle"></i> Начать сеанс</button>
+        </a>
+    </div>
+    {% endif %}
+</div>
+
+{% endblock %}

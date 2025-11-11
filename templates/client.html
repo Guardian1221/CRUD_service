@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>{% block title %} Клиент: {{ client['name'] }} {% endblock %}</h2>
+<hr>
+
+<!-- Основная информация -->
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col">Параметр</th>
+            <th scope="col">Значение</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>ФИО клиента</td>
+            <td><strong>{{ client['name'] }}</strong></td>
+        </tr>
+        <tr>
+            <td>Электронная почта</td>
+            <td>{{ client['email'] or 'Не указан' }}</td>
+        </tr>
+        <tr>
+            <td>Номер телефона</td>
+            <td>{{ client['phone_number'] }}</td>
+        </tr>
+    </tbody>
+</table>
+
+<div class="row mt-4">
+    <div class="col-auto">
+        <a href="/clients">
+            <button type="button" class="btn btn-secondary"><i class="bi-arrow-left"></i> Все клиенты</button>
+        </a>
+    </div>
+    <div class="col-auto">
+        <a href="{{ url_for('new_contract') }}?client_id={{ client['id'] }}">
+            <button type="button" class="btn btn-success"><i class="bi-play-circle"></i> Начать сеанс</button>
+        </a>
+    </div>
+    <div class="col-auto">
+    <a href="{{ url_for('generate_client_report', client_id=client['id']) }}" class="btn btn-info">
+        <i class="bi-file-earmark-pdf"></i> Отчет PDF
+    </a>
+</div>
+</div>
+
+{% endblock %}

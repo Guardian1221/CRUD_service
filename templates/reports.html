@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>{% block title %} Отчеты {% endblock %}</h1>
+
+<div class="container mt-3">
+    <div class="row">
+        {% for report in reports %}
+        <div class="col-md-6 col-lg-4 mb-3">
+            <div class="card p-3 mb-2 border-info">
+                <div class="card-header">
+                    <a href="{{ url_for('report', report_id=report['id']) }}">
+                        <b>Отчет #{{ report['number'] }}</b>
+                    </a>
+                </div>
+                <div class="card-body">
+                    <p class="card-text">
+                        <strong>Тип:</strong> {{ report['report_type'] }}<br>
+                        <strong>Дата:</strong> {{ report['date'] }}<br>
+                        <strong>Сотрудник:</strong> {{ report['employee_name'] }}<br>
+                        <strong>Описание:</strong> {{ report['description'][:100] }}{% if report['description']|length > 100 %}...{% endif %}
+                    </p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}

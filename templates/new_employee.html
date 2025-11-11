@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>{% block title %} Добавление нового сотрудника {% endblock %}</h1>
+<br>
+<form method="post" class="px-4">
+    <div class="row mb-4">
+        <label for="name" class="col-sm-3 col-form-label">ФИО сотрудника</label>
+        <div class="col-sm-8">
+            <input type="text" class="form-control" name="name" value="{{ request.form['name'] }}" placeholder="Введите ФИО..." required>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label for="phone_number" class="col-sm-3 col-form-label">Номер телефона</label>
+        <div class="col-sm-8">
+            <input type="text" class="form-control" name="phone_number" value="{{ request.form['phone_number'] }}" placeholder="Введите номер телефона..." required>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label for="email" class="col-sm-3 col-form-label">Email</label>
+        <div class="col-sm-8">
+            <input type="email" class="form-control" name="email" value="{{ request.form['email'] }}" placeholder="example@example.ru">
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label for="position" class="col-sm-3 col-form-label">Должность</label>
+        <div class="col-sm-8">
+            <input type="text" class="form-control" name="position" value="{{ request.form['position'] }}" placeholder="Введите должность" required>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label for="chief_id" class="col-sm-3 col-form-label">Начальник</label>
+        <div class="col-sm-8">
+            <select class="form-select" name="chief_id">
+                <option value="">Не выбран</option>
+                {% for chief in chiefs %}
+                <option value="{{ chief.id }}">{{ chief.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label for="branch_id" class="col-sm-3 col-form-label">Филиал</label>
+        <div class="col-sm-8">
+            <select class="form-select" name="branch_id" required>
+                <option value="">Выберите филиал</option>
+                {% for branch in branches %}
+                <option value="{{ branch.id }}">{{ branch.branch_name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary"><i class="bi-person-badge"></i> Добавить сотрудника</button>
+    <a href="/employees" class="btn btn-secondary">Отмена</a>
+</form>
+{% endblock %}

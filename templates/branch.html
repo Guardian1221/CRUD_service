@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>{% block title %} Филиал: {{ branch['branch_name'] }} {% endblock %}</h2>
+<hr>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col">Параметр</th>
+            <th scope="col">Значение</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Название филиала</td>
+            <td><strong>{{ branch['branch_name'] }}</strong></td>
+        </tr>
+        <tr>
+            <td>Адрес</td>
+            <td>{{ branch['address'] }}</td>
+        </tr>
+    </tbody>
+</table>
+
+<!-- Компьютеры в филиале -->
+<div class="mt-4">
+    <h5>Компьютеры в филиале</h5>
+    {% if branch['devices'] %}
+    <div class="list-group">
+        {% for device in branch['devices'] %}
+        <a href="{{ url_for('device', device_id=device['id']) }}" class="list-group-item list-group-item-action">
+            <div class="d-flex w-100 justify-content-between">
+                <h6 class="mb-1">{{ device['address'] }}</h6>
+                <small>{{ device['current_client_name'] or 'Свободен' }}</small>
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+    {% else %}
+    <p class="text-muted">В этом филиале нет компьютеров</p>
+    {% endif %}
+</div>
+
+<!-- Сотрудники в филиале -->
+<div class="mt-4">
+    <h5>Сотрудники в филиале</h5>
+    {% if branch['employees'] %}
+    <div class="list-group">
+        {% for employee in branch['employees'] %}
+        <a href="{{ url_for('employee', employee_id=employee['id']) }}" class="list-group-item list-group-item-action">
+            <div class="d-flex w-100 justify-content-between">
+                <h6 class="mb-1">{{ employee['name'] }}</h6>
+                <small>{{ employee['position'] }}</small>
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+    {% else %}
+    <p class="text-muted">В этом филиале нет сотрудников</p>
+    {% endif %}
+</div>
+
+<div class="row mt-4">
+    <div class="col-auto">
+        <a href="/branches">
+            <button type="button" class="btn btn-secondary"><i class="bi-arrow-left"></i> Все филиалы</button>
+        </a>
+    </div>
+</div>
+
+{% endblock %}

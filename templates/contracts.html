@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>{% block title %} Сеансы аренды {% endblock %}</h1>
+
+<!-- Список сеансов -->
+<div class="container mt-3">
+    <div class="row">
+        {% for contract in contracts %}
+        <div class="col-md-6 col-lg-4 mb-3">
+            <div class="card p-3 mb-2 border-primary">
+                <div class="card-header">
+                    <a href="{{ url_for('contract', contract_id=contract['id']) }}">
+                        <b>Сеанс #{{ contract['numbers'] }}</b>
+                    </a>
+                    <br>
+                    <small class="text-muted">{{ contract['dates'] }}</small>
+                </div>
+                <div class="card-body">
+                    <p class="card-text">
+                        <strong>Клиент:</strong> {{ contract['client_name'] }}<br>
+                        <strong>Компьютер:</strong> {{ contract['device_address'] }}<br>
+                        <strong>Тариф:</strong> {{ contract['price'] }} ₽/час<br>
+                        <strong>Стоимость:</strong> {{ contract['finish_price'] }} ₽
+                    </p>
+                </div>
+                <div class="card-footer bg-transparent">
+                    <div class="btn-group w-100" role="group">
+                        <a href="{{ url_for('contract', contract_id=contract['id']) }}" class="btn btn-outline-primary btn-sm">
+                            <i class="bi-eye"></i>
+                        </a>
+                        <a href="{{ url_for('generate_contract', contract_id=contract['id']) }}" class="btn btn-outline-success btn-sm">
+                            <i class="bi-receipt"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <div class="col-12">
+            <div class="text-center py-5">
+                <i class="bi-clock-history display-1 text-muted"></i>
+                <h3 class="text-muted mt-3">Нет активных сеансов</h3>
+                <p class="text-muted">Начните новый сеанс аренды</p>
+                <a href="{{ url_for('generate_contract', contract_id=contract['id']) }}" class="btn btn-outline-success btn-sm">
+                    <i class="bi-receipt"></i>
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>{% block title %} Чек для сеанса #{{ contract['numbers'] }} {% endblock %}</h1>
+
+<div class="card">
+    <div class="card-header bg-primary text-white">
+        <h4 class="mb-0">COLIZEUM Computer Club</h4>
+    </div>
+    <div class="card-body">
+        <div class="row mb-3">
+            <div class="col-6">
+                <strong>Сеанс:</strong> #{{ contract['numbers'] }}
+            </div>
+            <div class="col-6 text-end">
+                <strong>Дата:</strong> {{ contract['dates'] }}
+            </div>
+        </div>
+        
+        <hr>
+        
+        <div class="row mb-2">
+            <div class="col-12">
+                <strong>Клиент:</strong> {{ contract['client_name'] }}
+            </div>
+        </div>
+        <div class="row mb-2">
+            <div class="col-12">
+                <strong>Телефон:</strong> {{ contract['client_phone'] }}
+            </div>
+        </div>
+        <div class="row mb-2">
+            <div class="col-12">
+                <strong>Компьютер:</strong> {{ contract['device_address'] }}
+            </div>
+        </div>
+        <div class="row mb-2">
+            <div class="col-12">
+                <strong>Филиал:</strong> {{ contract['branch_name'] }}
+            </div>
+        </div>
+        
+        <hr>
+        
+        <div class="row mb-2">
+            <div class="col-6">Тариф:</div>
+            <div class="col-6 text-end">{{ contract['price'] }} ₽/час</div>
+        </div>
+        <div class="row mb-2">
+            <div class="col-6">Скидка:</div>
+            <div class="col-6 text-end">{{ contract['discount'] or '0' }}%</div>
+        </div>
+        <div class="row mb-2">
+            <div class="col-6"><strong>Итого:</strong></div>
+            <div class="col-6 text-end"><strong>{{ contract['finish_price'] }} ₽</strong></div>
+        </div>
+        
+        <hr>
+        
+        <div class="row">
+            <div class="col-12 text-center">
+                <small class="text-muted">Спасибо за посещение!</small>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-auto">
+        <button onclick="window.print()" class="btn btn-primary">
+            <i class="bi-printer"></i> Печать
+        </button>
+    </div>
+    <div class="col-auto">
+        <a href="/contracts" class="btn btn-secondary">
+            <i class="bi-arrow-left"></i> Назад к сеансам
+        </a>
+    </div>
+</div>
+
+<style>
+@media print {
+    .nav, .btn, .bg-light {
+        display: none !important;
+    }
+    .card {
+        border: none !important;
+        box-shadow: none !important;
+    }
+}
+</style>
+
+{% endblock %}
