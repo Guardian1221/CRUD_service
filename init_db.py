@@ -66,7 +66,7 @@ cur.execute("""CREATE TABLE IF NOT EXISTS reports (
 
 # Филиалы
 cur.execute("INSERT INTO branch (address, branch_name) VALUES (?, ?)",
-            ('г. Москва, ул. Солнечная, д.13б', 'COLIZEUM Солнечная'))
+            ('г. Москва, ул. Солнечная, д.13б', 'CYBER ARENA Солнечная'))
 
 # Сотрудники
 cur.execute("INSERT INTO employee (name, email, phone_number, position, chief_id, branch_id) VALUES (?, ?, ?, ?, ?, ?)",
@@ -81,7 +81,7 @@ cur.execute("INSERT INTO client (name, email, phone_number) VALUES (?, ?, ?)",
 
 # Устройства
 cur.execute("INSERT INTO device (address, branch_id, client_id) VALUES (?, ?, ?)",
-            ('Зал A, место 1', 1, None))  # client_id может быть NULL
+            ('Зал A, место 1', 1, None))
 
 # Контракты
 cur.execute("INSERT INTO contracts (numbers, dates, price, discount, device_status, device_id, client_id, employee_id, finish_price) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",

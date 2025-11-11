@@ -24,7 +24,7 @@ def _generate_contract_docx(contract):
     try:
         doc = Document()
 
-        title = doc.add_heading('COLIZEUM COMPUTER CLUB', 0)
+        title = doc.add_heading('CYBER ARENA COMPUTER CLUB', 0)
         title.alignment = WD_ALIGN_PARAGRAPH.CENTER
         
         subtitle = doc.add_heading('ЧЕК ОПЛАТЫ', 1)
@@ -115,7 +115,7 @@ def _generate_client_report_docx(client):
     try:
         doc = Document()
 
-        title = doc.add_heading('COLIZEUM COMPUTER CLUB', 0)
+        title = doc.add_heading('CYBER ARENA COMPUTER CLUB', 0)
         title.alignment = WD_ALIGN_PARAGRAPH.CENTER
         
         subtitle = doc.add_heading('ОТЧЕТ ПО КЛИЕНТУ', 1)
@@ -382,8 +382,7 @@ def get_device(device_id):
     
     if device is None:
         abort(404)
-    
-    # Преобразуем в dict и добавляем историю
+
     device_dict = dict(device)
     device_dict['session_history'] = [dict(session) for session in sessions]
     return device_dict
