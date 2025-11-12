@@ -1,11 +1,9 @@
 import sqlite3
 import io
 import os
-import pprint
-from flask import Flask, render_template, redirect, request, flash, send_from_directory, send_file
+from flask import Flask, render_template, redirect, request, flash, send_file
 from werkzeug.exceptions import abort
 from docx import Document
-from docx.shared import Inches
 from docx.enum.text import WD_ALIGN_PARAGRAPH
 from datetime import datetime
 
@@ -20,7 +18,6 @@ def get_db_connection():
     return conn
 
 def _generate_contract_docx(contract):
-    """Генерация DOCX файла для чека сеанса"""
     try:
         doc = Document()
 
